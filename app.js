@@ -17,7 +17,8 @@ mongoose.
     'mongodb://127.0.0.1:27017/ecommerce-1',
     { useNewUrlParser: true,
       useUnifiedTopology: true,
-      useFindAndModify: true,
+      useFindAndModify: false,
+      useCreateIndex: true
     }
   )
   .then(() => console.log('MongoDB successfully connected'))

@@ -45,6 +45,19 @@ module.exports = {
       return res.status(400).json(e.message);
     }
   },
+  delete: async (req,res,next) => {
+    let id = req.params.id;
+    try {
+      const product = await Product.findOneAndUpdate(
+        {'_id':id},
+        {delete: true},
+        {new: true}
+      );
+      return res.status(200).json({'Set product as deleted': product});
+    } catch (error) {
+     return res.status(400).json({'error': error});
+    }
+  },
   getById: async (req, res, next) => {
       Product.findById(req.params.id)
         .populate( "categories", "-_id name")
