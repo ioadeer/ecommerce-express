@@ -8,24 +8,24 @@ module.exports = {
     try {
       let queryFind = {};
       if (req.query.buscar) {
-        queryFind = { name: { $regex: `.*${req.query.buscar}.*`, $options: 'i'}};
+        queryFind = { name: { $regex: `.*${req.query.buscar}.*`, $options: 'i' } };
       }
       if (req.query.categories) {
-        queryFind = { categories: { $in: req.query.categories} };
+        queryFind = { categories: { $in: req.query.categories } };
       }
       const products = await Product.find(queryFind)
         .populate('categories', '-_id name');
       if (!products[0]) return res.status(404).json({ error: 'products not found' });
       return res.status(200).json({ products });
     } catch (e) {
-      return res.status(400).json({error: e });
+      return res.status(400).json({ error: e });
     }
   },
   create: async (req, res, next) => {
     let category;
     try {
       category = await Category.findByIdAndValidate(req.body.category);
-      if (category.error) { return res.status(200).json(category);}
+      if (category.error) { return res.status(200).json(category); }
     } catch (e) {
       return res.status(200).json(e);
     }
@@ -55,18 +55,23 @@ module.exports = {
         { delete: true },
         { new: true },
       );
-      return res.status(200).json({'Set product as deleted': product});
+      return res.status(200).json({ 'Set product as deleted': product });
     } catch (error) {
       return res.status(400).json({ error });
     }
   },
   getById: async (req, res, next) => {
-    Product.findById(req.params.id)
-      .populate('categories', '-_id name')
-      .exec((err, product) => {
-        if (err) return res.status(400).json({ error: err });
-        return res.status(200).json({ product });
-      });
+    try {
+      const product = await Product.findById(req.params.id)
+        .populate('categories', '-_id name');
+      return res.status(200).json(product);
+      // .exec((err, product) => {
+      //   if (err) return res.status(400).json({ error: err });
+      //   return res.status(200).json({ product });
+      // });
+    } catch (e) {
+      return res.status(400).json(e);
+    }
   },
   getByTags: async (req, res, next) => {
     const { params } = req;

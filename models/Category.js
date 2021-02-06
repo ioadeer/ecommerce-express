@@ -24,8 +24,4 @@ CategorySchema.statics.findByIdAndValidate = async (id) => {
   }
 };
 
-const Category = mongoose.model('categories', CategorySchema);
-
-module.exports = {
-  Category,
-};
+module.exports = Category = mongoose.model('categories', CategorySchema);

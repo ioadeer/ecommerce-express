@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose;
+// eslint-disable-next-line prefer-destructuring
+const Schema = mongoose.Schema;
 
 // Create product schema
 
@@ -41,11 +42,7 @@ const ProductSchema = new Schema({
   sales: {
     type: Number,
     required: false,
-  },
+  }
 });
 
-const Product = mongoose.model('products', ProductSchema);
-
-module.exports = {
-  Product,
-};
+module.exports = Product = mongoose.model('products', ProductSchema);

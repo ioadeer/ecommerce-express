@@ -75,4 +75,6 @@ UserSchema.path('hashed_password').validate((v) => {
   if (this.isNew && !this._password) {
     this.invalidate('password', 'Password is required');
   }
-})
+});
+
+module.exports = User =  mongoose.model('users', UserSchema);
