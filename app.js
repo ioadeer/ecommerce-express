@@ -11,18 +11,17 @@ const categoriesRouter = require('./routes/categories');
 
 const app = express();
 
-
-mongoose.
-  connect(
-    'mongodb://127.0.0.1:27017/ecommerce-1',
-    { useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-      useCreateIndex: true
-    }
-  )
+mongoose.connect(
+  'mongodb://127.0.0.1:27017/ecommerce-1',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+  },
+)
   .then(() => console.log('MongoDB successfully connected'))
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
 app.use(logger('dev'));
 app.use(express.json());

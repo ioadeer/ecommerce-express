@@ -1,26 +1,31 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const CategorySchema = new Schema({
   name: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
-CategorySchema.statics.findByIdAndValidate = async function(id) {
-  try{
-  const document = await this.findById(id);
-  if (!document) {
-    return {
-      error: true,
-      message: "Category not found!"
+CategorySchema.statics.findByIdAndValidate = async (id) => {
+  try {
+    const document = await this.findById(id);
+    if (!document) {
+      return {
+        error: true,
+        message: 'Category not found!',
+      };
     }
-  }
-  return document;
+    return document;
   } catch (e) {
-    console.log(e);
+    return e;
   }
-}
+};
 
-module.exports = Category = mongoose.model('categories', CategorySchema);
+const Category = mongoose.model('categories', CategorySchema);
+
+module.exports = {
+  Category,
+};
