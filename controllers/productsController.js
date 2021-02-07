@@ -34,11 +34,12 @@ module.exports = {
       price: req.body.price,
       description: req.body.description,
       status: req.body.status,
+      sku: req.body.sku,
       delete: false,
       sales: 0,
     });
     // eslint-disable-next-line no-underscore-dangle
-    product.categories.push(category._id);
+    product.categories.push(category);
     try {
       await product.save();
       return res.status(200).json({ 'created product': product });

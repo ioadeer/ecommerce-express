@@ -1,6 +1,8 @@
+/* eslint-disable func-names */
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose;
+// eslint-disable-next-line prefer-destructuring
+const Schema = mongoose.Schema;
 
 const CategorySchema = new Schema({
   name: {
@@ -9,7 +11,7 @@ const CategorySchema = new Schema({
   },
 });
 
-CategorySchema.statics.findByIdAndValidate = async (id) => {
+CategorySchema.statics.findByIdAndValidate = async function (id) {
   try {
     const document = await this.findById(id);
     if (!document) {
@@ -24,4 +26,5 @@ CategorySchema.statics.findByIdAndValidate = async (id) => {
   }
 };
 
+// eslint-disable-next-line no-multi-assign
 module.exports = Category = mongoose.model('categories', CategorySchema);
