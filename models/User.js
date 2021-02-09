@@ -36,4 +36,6 @@ const UserSchema = new Schema({
   salt: String,
 });
 
-module.exports = User =  mongoose.model('users', UserSchema);
+const User = mongoose.model('users', UserSchema);
+
+module.exports = User;

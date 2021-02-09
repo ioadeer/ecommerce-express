@@ -10,8 +10,10 @@
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "is-empty": "^1.2.0",
     "mongoose": "^5.11.13",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "validator": "^13.5.2"
   },
   "devDependencies": {
     "eslint": "^7.19.0",

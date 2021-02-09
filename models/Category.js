@@ -26,5 +26,6 @@ CategorySchema.statics.findByIdAndValidate = async function (id) {
   }
 };
 
-// eslint-disable-next-line no-multi-assign
-module.exports = Category = mongoose.model('categories', CategorySchema);
+const Category = mongoose.model('categories', CategorySchema);
+
+module.exports = Category;
