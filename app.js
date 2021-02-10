@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -11,8 +12,10 @@ const categoriesRouter = require('./routes/categories');
 
 const app = express();
 
+const db = require('./config/keys').mongoURI;
+
 mongoose.connect(
-  'mongodb://127.0.0.1:27017/ecommerce-1',
+  db,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -29,6 +32,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.set('query parser', 'simple');
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Passport middleware
+app.use(passport.initialize());
+// Passport config
+require('./config/passport')(passport);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
-  frist_name: {
+  first_name: {
     type: String,
     trim: true,
   },

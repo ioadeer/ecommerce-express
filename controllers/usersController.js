@@ -1,10 +1,14 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 const {
   validateRegisterInput,
+  validateLoginInput,
 } = require('../validation/users');
 const User = require('../models/User');
+const keys = require('../config/keys');
 
 module.exports = {
   // eslint-disable-next-line consistent-return
@@ -36,5 +40,49 @@ module.exports = {
         });
       });
     });
+  },
+  login: async (req, res) => {
+    const { errors, isValid } = validateLoginInput(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    const { email } = req.body;
+    const { password } = req.body;
+
+    User.findOne({ email }).then((user) => {
+      if (!user) {
+        return res.json({ emailnotfound: 'User not found!' });
+      }
+      bcrypt.compare(password, user.hashed_password).then((isMatch) => {
+        if (isMatch) {
+          const payload = {
+            id: user.id,
+            user: user.first_name,
+          };
+          // Sign token
+          jwt.sign(
+            payload,
+            keys.secretOrKey,
+            {
+              expiresIn: '5h',
+            },
+            (err, token) => {
+              if (err) { return res.json({ error: 'User or password wrong' }); }
+              res.json({
+                success: true,
+                token: `Bearer ${token}`,
+              });
+            },
+          );
+        } else {
+          return res.json({ error: 'User or password wrong' });
+        }
+      });
+    }).catch((err) => res.json({ err }));
+  },
+  profile: (req, res) => {
+    return res.status(200).json(req.user);
   },
 };
