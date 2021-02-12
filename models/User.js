@@ -31,7 +31,7 @@ const UserSchema = new Schema({
   updated: Date,
   hashed_password: {
     type: String,
-    required: 'llll',
+    required: 'Password is required',
   },
   salt: String,
 });

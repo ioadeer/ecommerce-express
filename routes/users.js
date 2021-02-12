@@ -15,6 +15,9 @@ router
   // @desc Login user and return JWT
   // @acces Public
   .post('/login', usersController.login)
+  // @route GET /api/user/profile
+  // @desc Login user and return JWT
+  // @acces Public
   .get('/profile', passport.authenticate('jwt', { session: false }), usersController.profile);
 
 module.exports = router;

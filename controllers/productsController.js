@@ -66,10 +66,6 @@ module.exports = {
       const product = await Product.findById(req.params.id)
         .populate('categories', '-_id name');
       return res.status(200).json(product);
-      // .exec((err, product) => {
-      //   if (err) return res.status(400).json({ error: err });
-      //   return res.status(200).json({ product });
-      // });
     } catch (e) {
       return res.status(400).json(e);
     }
@@ -82,6 +78,15 @@ module.exports = {
       .exec((err, product) => {
         if (err) return res.status(400).json({ error: err });
         return res.status(200).json({ product });
+      });
+  },
+  getTopFive: async (req, res) => {
+    Product.find({})
+      .sort({ sales: 'desc' })
+      .limit(5)
+      .exec((err, products) => {
+        if (err) return res.status(400).json({ error: err });
+        return res.status(200).json({ products });
       });
   },
 };
