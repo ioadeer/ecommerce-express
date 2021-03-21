@@ -72,7 +72,10 @@ module.exports = {
               if (err) { return res.json({ error: 'User or password wrong' }); }
               res.json({
                 success: true,
-                token: `Bearer ${token}`,
+                token: `${token}`,
+                expiresIn: '5h',
+                first_name: user.first_name,
+                last_name: user.last_name,
               });
             },
           );
