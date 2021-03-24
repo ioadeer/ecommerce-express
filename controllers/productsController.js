@@ -94,7 +94,6 @@ module.exports = {
     // get product
     // create sale without confirm
     const user= req.user;
-    console.log(user);
     let amount;
     let product;
     if(req.query.amount) {
