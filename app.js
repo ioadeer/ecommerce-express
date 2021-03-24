@@ -11,6 +11,7 @@ const usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products');
 const categoriesRouter = require('./routes/categories');
 
+const mongooseMorgan = require('mongoose-morgan');
 const app = express();
 
 
@@ -27,6 +28,10 @@ mongoose.connect(
 )
   .then(() => console.log('MongoDB successfully connected'))
   .catch((err) => console.log(err));
+
+// app.use(mongooseMorgan({
+//   connectionString:db
+// }));
 
 app.use(logger('dev'));
 app.use(express.json());
