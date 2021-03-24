@@ -10,6 +10,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products');
 const categoriesRouter = require('./routes/categories');
+const salesRouter = require('./routes/sales');
 
 const mongooseMorgan = require('mongoose-morgan');
 const app = express();
@@ -62,6 +63,7 @@ app.use('/api', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/categories', categoriesRouter);
+app.use('/api/sales', salesRouter);
 
 const port = process.env.PORT || 5000;
 
