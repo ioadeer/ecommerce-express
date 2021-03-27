@@ -19,7 +19,7 @@ const SaleSchema = new Schema({
     price: Number,
     description: String,
     cantidad: Number,
-    product_id: {
+    _id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'products',
     },

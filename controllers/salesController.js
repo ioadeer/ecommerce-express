@@ -34,7 +34,7 @@ module.exports = {
         name: product.name,
         price: product.price,
         description: product.description,
-        product_id: product._id,
+        _id: product._id,
       },
       status: 'no_confirmada',
       payment: {
@@ -61,5 +61,40 @@ module.exports = {
       }
       return res.status(200).json({sale: sale});
     });
-  }
+  },
+  confirmPurchase: async (req, res) => {
+    const id =req.body._id;
+    Sale.findById(id, function(err, sale) {
+      if(err) return res.status(400).json(err);
+      sale.status = "confirmada";
+      sale.payment.method = req.body.payment.method;
+      if(req.user.id != sale.user._id){
+        console.log('if');
+        return res.status(403).json({ message: 'Forbidden' });
+      }
+      sale.save(function(error, confirmed) {
+        if(error) {
+          return res.status(400).json({error: err});
+        }
+        //update product
+        Product.findById(confirmed.product._id, function(err, prod) {
+          if(err) return console.log(err);
+          prod.sales += confirmed.payment.amount;
+          prod.save(function(err, prodUpdated) {
+            if(err) console.log('could not update product');
+          });
+        });
+        return res.status(200).json({'confirmed': confirmed});
+      });
+    });
+  },
+  getUsersPurchases: async (req, res) => {
+    const id =req.user._id;
+    try {
+      const sales = await Sale.find({ 'user._id' : id});
+      return res.status(200).json({'sales': sales});
+    } catch(e) {
+     return res.status(404).json({'error': e});
+    }
+  },
 };

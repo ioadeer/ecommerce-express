@@ -15,4 +15,14 @@ router.get('/detail/:id',
            salesController.getSellById
           );
 
+router.post('/confirm', 
+            passport.authenticate('jwt', { session: false }),
+           salesController.confirmPurchase
+          );
+
+router.get('/user', 
+            passport.authenticate('jwt', { session: false }),
+           salesController.getUsersPurchases
+          );
+
 module.exports = router;
